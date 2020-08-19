@@ -10,20 +10,25 @@
 
 <body>
 <div class="jumbotron">
-    <h3>Corona Virus Tracker (India)</h3>
+    <h3>Corona Virus Tracker</h3>
 
     <h2> <p  th:text="${total_cases}"></p></h2>
     <hr class="my-4">
+    <p>
+        <span> Total number of new cases reported today were: </span>
+        <span th:text="${new_cases}"> </span></p>
 </div>
 
 <table class="table table-dark">
     <tr>
-        <th>State</th>
+        <th>Country</th>
         <th>Active Cases</th>
+        <th>New Cases</th>
     </tr>
     <tr th:each="case : ${case_list}">
-        <td th:text="${case.state}">Onions</td>
-        <td th:text="${case.activeCount}">2.41</td>
+        <td th:text="${case.country}">Onions</td>
+        <td th:text="${case.latestCount}">2.41</td>
+        <td th:text="${case.diffFromPrevious}">2.41</td>
     </tr>
 </table>
 

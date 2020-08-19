@@ -19,5 +19,6 @@ class CovidDataModel {
     private int id;
     private String country;
     private String state;
-    private int activeCount;
+    private Integer latestCount;
+    private Integer diffFromPrevious;
 }

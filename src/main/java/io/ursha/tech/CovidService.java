@@ -3,8 +3,7 @@ package io.ursha.tech;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 class CovidService {
@@ -14,11 +13,11 @@ class CovidService {
 
     public List<CovidDataModel> getAll(){
         Iterable<CovidDataModel> list = covidRepository.findAll();
-        List<CovidDataModel> output = new ArrayList<>();
+        Set<CovidDataModel> output = new TreeSet<>((x,y)->y.getLatestCount()-x.getLatestCount());
         for (CovidDataModel t : list) {
             output.add(t);
         }
-        return output;
+        return new ArrayList<>(output);
     }
 
     public List<CovidDataModel> getAllRegion(String country){

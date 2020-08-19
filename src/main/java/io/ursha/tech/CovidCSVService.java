@@ -27,17 +27,26 @@ class CovidCSVService {
         for(CSVRecord record: records){
             CovidDataModel covidDataModel = new CovidDataModel();
 
-            String country = record.get("Country_Region");
-            String activeCount = record.get("Active");
-            String state = record.get("Province_State");
+            String country = record.get("Country/Region");
+            String latestCount = record.get(record.size()-1);
+            String previousCount = record.get(record.size()-2);
+            String state = record.get("Province/State");
 
+            int lc =0, pc=0;
             covidDataModel.setCountry(country);
             covidDataModel.setState(state);
 
-            if(!StringUtils.isEmpty(activeCount))
-            covidDataModel.setActiveCount(Integer.parseInt(activeCount));
+            if(!StringUtils.isEmpty(latestCount))
+                lc = Integer.parseInt(latestCount);
+
+            if(!StringUtils.isEmpty(previousCount))
+                pc = Integer.parseInt(previousCount);
+
+            covidDataModel.setDiffFromPrevious(lc-pc);
+            covidDataModel.setLatestCount(lc);
 
             covidDataModels.add(covidDataModel);
+
         }
         covidRepository.saveAll(covidDataModels);
     }

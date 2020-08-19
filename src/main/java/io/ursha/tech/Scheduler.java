@@ -27,7 +27,7 @@ class Scheduler {
     @Autowired
     private CovidCSVService covidCSVService;
 
-    private static final String DATA_SOURCE_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
+    private static final String DATA_SOURCE_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
 
     public Scheduler(){
@@ -43,8 +43,8 @@ class Scheduler {
     @PostConstruct
     public void getCovidData() throws IOException,InterruptedException {
 
-        String date = DateTimeFormatter.ofPattern("MM-dd-yyyy").withZone(ZoneId.systemDefault()).format(Instant.now().minus(1, ChronoUnit.DAYS));
-        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(DATA_SOURCE_URL+ date+".csv")).build();
+        //String date = DateTimeFormatter.ofPattern("MM-dd-yyyy").withZone(ZoneId.systemDefault()).format(Instant.now().minus(1, ChronoUnit.DAYS));
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(DATA_SOURCE_URL)).build();
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         covidCSVService.process(httpResponse.body());
     }
